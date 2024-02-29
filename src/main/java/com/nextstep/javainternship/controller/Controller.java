@@ -4,7 +4,6 @@ import com.nextstep.javainternship.entity.User;
 import com.nextstep.javainternship.repository.UserRepository;
 import com.nextstep.javainternship.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +28,7 @@ public class Controller {
     UserService userService;
 
     @PostMapping("/addNewUser")
-    public ResponseEntity<String> addNewAdmin(@RequestBody User user) {
+    public ResponseEntity<String> addNewUser(@RequestBody User user) {
         try {
             userService.saveUser(user);
             return ResponseEntity.ok("Successfully saved");
@@ -39,17 +38,22 @@ public class Controller {
     }
 
     @GetMapping("/getUserDetails/{id}")
-    public ResponseEntity<User> getAdminDetails(@PathVariable("id") int id) {
-        User user = userService.findUserById(id);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<User> getUserDetails(@PathVariable("id") int id) {
+        try {
+            User user = userService.findUserById(id);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 
     @PutMapping("/updateUserInfo/{id}")
-    public ResponseEntity<String> updateAdminInfo(@Valid @RequestBody User user, @PathVariable("id") int id) {
+    public ResponseEntity<String> updateUserInfo(@Valid @RequestBody User user, @PathVariable("id") int id) {
         try {
             userService.updateUser(user, id);
             return ResponseEntity.ok("Successfully Updated");
@@ -77,14 +81,13 @@ public class Controller {
 
             User user = userService.getUserNameAndPassword(username, password);
             if (user != null) {
-                // Return success response
                 return ResponseEntity.ok("Successfully logged in!");
             } else {
-                // Return error response
+
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
             }
         } catch (Exception e) {
-            // Handle other exceptions
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }

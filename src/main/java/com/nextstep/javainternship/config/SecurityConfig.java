@@ -38,7 +38,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/addNewUser","/getUserDetails/{id}","/updateUserInfo/{id}","/deleteUser/{id}","/login").permitAll()
+                .antMatchers("/addNewUser","/getUserDetails/{id}","/updateUserInfo/{id}","/deleteUser/{id}","/login","/addBlog","getBlog/{id}","/updateBlog/{id}","/deleteBlog/{id}","/addComment","/getComment/{id}","/updateComment/{id}","/deleteComment/{id}").permitAll()
                 .antMatchers("/authenticate").permitAll()
 
                 .anyRequest().authenticated()

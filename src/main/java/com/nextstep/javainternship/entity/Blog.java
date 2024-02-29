@@ -3,7 +3,6 @@ package com.nextstep.javainternship.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 

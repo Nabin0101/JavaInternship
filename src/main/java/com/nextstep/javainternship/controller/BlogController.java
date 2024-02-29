@@ -1,7 +1,6 @@
 package com.nextstep.javainternship.controller;
 
 import com.nextstep.javainternship.entity.Blog;
-import com.nextstep.javainternship.entity.Comment;
 import com.nextstep.javainternship.service.BlogService;
 import com.nextstep.javainternship.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,23 @@ public class BlogController {
     public ResponseEntity<Blog> addBlog(@Valid @RequestBody Blog blog) {
         Blog savedBlog = blogService.saveBlog(blog);
         return ResponseEntity.ok(savedBlog);
+    }
+
+    @GetMapping("/getBlog/{id}")
+    public ResponseEntity<Blog> getBlogDetails(@PathVariable("id") int id) {
+        try {
+            Blog blog = blogService.getBlog(id);
+            if (blog != null) {
+                return ResponseEntity.ok(blog);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
     }
 
     @PutMapping("/updateBlog/{id}")

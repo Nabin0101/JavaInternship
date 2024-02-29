@@ -18,9 +18,30 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/addComment")
-    public ResponseEntity<Comment> addComment(@Valid @RequestBody Comment comment) {
-        Comment savedComment = commentService.saveComment(comment);
-        return ResponseEntity.ok(savedComment);
+    public ResponseEntity<String> addComment(@Valid @RequestBody Comment comment) {
+        try {
+             commentService.saveComment(comment);
+            return ResponseEntity.ok("Comment saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save comment");
+        }
+    }
+
+    @GetMapping("/getComment/{id}")
+    public ResponseEntity<Comment> getCommentDetails(@PathVariable("id") int id) {
+        try {
+            Comment comment = commentService.getComment(id);
+            if (comment != null) {
+                return ResponseEntity.ok(comment);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
     }
 
     @PutMapping("updateComment/{id}")
@@ -33,7 +54,7 @@ public class CommentController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deleteComment/{id}")
     public ResponseEntity<String> deleteComment(@PathVariable Integer id) {
         try {
             commentService.deleteComment(id);

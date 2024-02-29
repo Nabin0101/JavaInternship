@@ -12,6 +12,9 @@ public class User {
     private  int id;
     private String fullName;
     private String userName;
+    private String address;
+    private String password;
+    private String role;
 
     public String getUserName() {
         return userName;
@@ -20,10 +23,6 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    private String address;
-    private String password;
-    private String role;
 
     public int getId() {
         return id;
