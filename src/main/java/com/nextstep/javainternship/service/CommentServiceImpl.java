@@ -6,6 +6,7 @@ import com.nextstep.javainternship.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +39,16 @@ public class CommentServiceImpl implements  CommentService {
     public Comment getComment(int id) {
         Optional<Comment> commentFound =commentRepository.findById(id);
         return commentFound.orElse(null);
+    }
+
+    @Override
+    public Comment saveComment(Comment comment, int id) {
+        return commentRepository.save(comment);
+    }
+
+    @Override
+    public List<Comment> getCommentsForBlog(int id) {
+        return commentRepository.findByBlogId(id);
     }
 }
 

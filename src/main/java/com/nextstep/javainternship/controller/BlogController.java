@@ -1,6 +1,7 @@
 package com.nextstep.javainternship.controller;
 
 import com.nextstep.javainternship.entity.Blog;
+import com.nextstep.javainternship.entity.Comment;
 import com.nextstep.javainternship.service.BlogService;
 import com.nextstep.javainternship.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,15 +65,15 @@ public class BlogController {
         }
     }
 
-//    @PostMapping("/{blogId}/comments")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Comment addCommentToBlog(@RequestBody Comment comment, @PathVariable int id) {
-//        return commentService.saveComment(comment, id);
-//    }
-//
-//    // Get All Comments for a Blog
-//    @GetMapping("/{blogId}/comments")
-//    public List<Comment> getCommentsForBlog(@PathVariable int blogId) {
-//        return commentService.getCommentsForBlog(blogId);
-//    }
+    @PostMapping("/{blogId}/comments")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Comment addCommentToBlog(@RequestBody Comment comment, @PathVariable int id) {
+        return commentService.saveComment(comment, id);
+    }
+
+    // Get All Comments for a Blog
+    @GetMapping("/{blogId}/comments")
+    public List<Comment> getCommentsForBlog(@PathVariable int blogId) {
+        return commentService.getCommentsForBlog(blogId);
+    }
 }
